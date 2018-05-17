@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import nihonkaeritai.com.himajin.Fragments.ProfileFragment
+import nihonkaeritai.com.himajin.Fragments.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,17 +12,17 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> {
                 val fragment = ProfileFragment.newInstance("Hey Home")
-                supportFragmentManager.beginTransaction().replace(R.id.framgent_container, fragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                val fragment = ProfileFragment.newInstance("Hey DB")
-                supportFragmentManager.beginTransaction().replace(R.id.framgent_container, fragment).commit()
+                val fragment = DashboardFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                 val fragment = ProfileFragment.newInstance("Hey Notes")
-                supportFragmentManager.beginTransaction().replace(R.id.framgent_container, fragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
         }
