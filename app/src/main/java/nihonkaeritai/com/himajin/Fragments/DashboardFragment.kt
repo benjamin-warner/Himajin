@@ -18,8 +18,8 @@ class DashboardFragment : Fragment() {
     private lateinit var locationTextView: TextView
 
     companion object {
-        fun newInstance(): ProfileFragment {
-            return ProfileFragment()
+        fun newInstance(): DashboardFragment {
+            return DashboardFragment()
         }
     }
 
@@ -27,7 +27,7 @@ class DashboardFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_dashboard, container, false)
         locationTextView = rootView.findViewById(R.id.textView) as TextView
-        locationTextView.text = "What..."
+        locationTextView.text = "Locating..."
         return rootView
     }
 
@@ -44,9 +44,13 @@ class DashboardFragment : Fragment() {
     private fun onContextAttached(context: Context?) {
         if(context is Activity){
             PermissionHelper.RequestGpsPermission(context)
-            gpsHelper = GpsHelper(context, 20000, 1000, { location ->
-                locationTextView.text = location.toString()
+            gpsHelper = GpsHelper(context, 60000, 2000, { location ->
+                activity!!.runOnUiThread( {
+                    locationTextView.text = GpsHelper.GetCityName(context, location)
+                })
             })
+            gpsHelper.resumeGpsUpdates()
         }
     }
+
 }

@@ -1,7 +1,14 @@
 package nihonkaeritai.com.himajin.Helpers;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Handler;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import nihonkaeritai.com.himajin.Wrappers.GpsWrapper;
 
@@ -35,5 +42,23 @@ public class GpsHelper {
             mGpsWrapper.updateLocation(mTimeOutDuration);
             mGpsHandler.postDelayed(this, mRefreshInterval);
         }
+    }
+
+    public static String GetCityName(Context context, Location loc){
+        String cityName = "Unknown";
+        Geocoder gcd = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses;
+        try {
+            addresses = gcd.getFromLocation(loc.getLatitude(),
+                    loc.getLongitude(), 1);
+            if (addresses.size() > 0) {
+                System.out.println(addresses.get(0).getLocality());
+                cityName = addresses.get(0).getLocality();
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cityName;
     }
 }

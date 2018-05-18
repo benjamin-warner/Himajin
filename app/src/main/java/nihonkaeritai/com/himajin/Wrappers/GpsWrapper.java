@@ -12,7 +12,6 @@ import android.support.v4.app.ActivityCompat;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class GpsWrapper {
 
     private Context mActivity;
