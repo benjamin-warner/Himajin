@@ -25,7 +25,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
-        rootView.textView.text = arguments?.getString(ARG_SECTION_NUMBER)
+        rootView.textView.text = "Derp..."
         return rootView
     }
 }
