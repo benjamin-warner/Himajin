@@ -1,6 +1,7 @@
 package io.nihonkaeritai.himajin.Interfaces
 
 interface IAuth {
-    fun register(email: String, password : String)
-    fun login(email: String, password : String)
+    fun register(email: String, password : String, handler: IHandlesAuth)
+    fun login(email: String, password : String, handler: IHandlesAuth)
+    fun isLoggedIn() : Boolean
 }

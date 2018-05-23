@@ -1,5 +1,6 @@
 package io.nihonkaeritai.himajin.Adapters
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -12,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import io.nihonkaeritai.himajin.Auth.FirebaseAuthMethod
 import io.nihonkaeritai.himajin.Interfaces.IAuth
+import io.nihonkaeritai.himajin.Interfaces.IHandlesAuth
 import io.nihonkaeritai.himajin.R
 
 class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager){
@@ -28,13 +30,13 @@ class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
         return 2
     }
 
-    class AuthFragment : Fragment(){
-
-        private lateinit var email : EditText
-        private lateinit var password : EditText
+    class AuthFragment : Fragment() {
+        private lateinit var email: EditText
+        private lateinit var password: EditText
+        private lateinit var authHandler: IHandlesAuth
 
         companion object {
-            private const val NEW_USER : String = "NEW_USER"
+            private const val NEW_USER: String = "NEW_USER"
 
             fun newInstance(newUser: Boolean): AuthFragment {
                 val fragment = AuthFragment()
@@ -46,27 +48,45 @@ class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
         }
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            val view = layoutInflater.inflate(R.layout.fragment_login, container,false)
+            val view = layoutInflater.inflate(R.layout.fragment_login, container, false)
 
             email = view.findViewById(R.id.editText_email)
             password = view.findViewById(R.id.editText_password)
 
+            val title: TextView = view.findViewById(R.id.page_name)
             val isNewUser = arguments!!.getBoolean(NEW_USER)
-            val title : TextView = view.findViewById(R.id.page_name)
-            if(isNewUser) title.text = "Register" else title.text = "Login"
+            if (isNewUser) title.text = "Register" else title.text = "Login"
 
-            val authButton : Button = view.findViewById(R.id.button_auth)
-            if(isNewUser) authButton.text = "Register" else authButton.text = "Login"
+            val authButton: Button = view.findViewById(R.id.button_auth)
+            if (isNewUser) authButton.text = "Register" else authButton.text = "Login"
 
-            authButton.setOnClickListener {
-                val email = email.text.toString()
-                val password = password.text.toString()
-                if(email.isNotEmpty() && password.isNotEmpty()) {
-                    val auth: IAuth = FirebaseAuthMethod()
-                    if(isNewUser) auth.register(email, password) else auth.login(email, password)
+            authButton.setOnClickListener { runAuth() }
+
+            return view
+        }
+
+        override fun onAttach(context: Context?) {
+            super.onAttach(context)
+            if (context is IHandlesAuth){
+                authHandler = context
+            }
+            else{
+                throw ClassCastException("Context must implement IHandlesAuth!")
+            }
+        }
+
+        private fun runAuth() {
+            val email = email.text.toString()
+            val password = password.text.toString()
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                val auth: IAuth = FirebaseAuthMethod()
+                val isNewUser = arguments!!.getBoolean(NEW_USER)
+                if (isNewUser) {
+                    auth.register(email, password, authHandler)
+                } else {
+                    auth.login(email, password, authHandler)
                 }
             }
-            return view
         }
     }
 }
