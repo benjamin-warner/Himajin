@@ -21,8 +21,10 @@ class AuthActivity : FragmentActivity(), IHandlesAuth {
     }
 
     override fun handleAuthAttempt(success: Boolean, exception: AuthException?) {
-        if(success)
+        if(success) {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
         else
             Toast.makeText(this, exception?.message, Toast.LENGTH_SHORT).show()
     }
