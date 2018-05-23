@@ -1,4 +1,4 @@
-package nihonkaeritai.com.himajin.Wrappers;
+package io.nihonkaeritai.himajin.Wrappers;
 
 import android.Manifest;
 import android.content.Context;

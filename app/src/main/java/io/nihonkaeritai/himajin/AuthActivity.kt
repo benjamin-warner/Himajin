@@ -1,9 +1,9 @@
-package nihonkaeritai.com.himajin
+package io.nihonkaeritai.himajin
 
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
-import nihonkaeritai.com.himajin.Adapters.AuthPagerAdapter
+import io.nihonkaeritai.himajin.Adapters.AuthPagerAdapter
 
 class AuthActivity : FragmentActivity() {
 

@@ -1,10 +1,10 @@
-package nihonkaeritai.com.himajin
+package io.nihonkaeritai.himajin
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import io.nihonkaeritai.himajin.Fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
-import nihonkaeritai.com.himajin.Fragments.*
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package nihonkaeritai.com.himajin.Helpers;
+package io.nihonkaeritai.himajin.Helpers;
 
 import android.content.Context;
 import android.location.Address;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import nihonkaeritai.com.himajin.Wrappers.GpsWrapper;
+import io.nihonkaeritai.himajin.Wrappers.GpsWrapper;
 
 public class GpsHelper {
 

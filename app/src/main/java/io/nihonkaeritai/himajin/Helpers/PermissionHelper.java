@@ -1,4 +1,4 @@
-package nihonkaeritai.com.himajin.Helpers;
+package io.nihonkaeritai.himajin.Helpers;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-import nihonkaeritai.com.himajin.Wrappers.SharedPreferenceWrapper;
+import io.nihonkaeritai.himajin.Wrappers.SharedPreferenceWrapper;
 
 public class PermissionHelper {
 

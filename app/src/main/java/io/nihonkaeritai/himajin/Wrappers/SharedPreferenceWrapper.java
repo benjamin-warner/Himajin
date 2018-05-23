@@ -1,4 +1,4 @@
-package nihonkaeritai.com.himajin.Wrappers;
+package io.nihonkaeritai.himajin.Wrappers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
