@@ -1,4 +1,4 @@
-package nihonkaeritai.com.himajin
+package io.nihonkaeritai.himajin
 
 import org.junit.Test
 

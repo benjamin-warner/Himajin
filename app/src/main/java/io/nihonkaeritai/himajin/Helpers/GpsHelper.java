@@ -1,4 +1,4 @@
-package nihonkaeritai.com.himajin.Helpers;
+package io.nihonkaeritai.himajin.Helpers;
 
 import android.content.Context;
 import android.location.Address;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import nihonkaeritai.com.himajin.Wrappers.GpsWrapper;
+import io.nihonkaeritai.himajin.Wrappers.GpsWrapper;
 
 public class GpsHelper {
 
@@ -28,7 +28,7 @@ public class GpsHelper {
         mTimeOutDuration = timeOut;
     }
 
-    public void stopGpsUpdates(){
+    public void stopGpsUpdates() {
         mGpsHandler.removeCallbacks(mGpsRunnable);
     }
 
@@ -52,7 +52,6 @@ public class GpsHelper {
             addresses = gcd.getFromLocation(loc.getLatitude(),
                     loc.getLongitude(), 1);
             if (addresses.size() > 0) {
-                System.out.println(addresses.get(0).getLocality());
                 cityName = addresses.get(0).getLocality();
             }
         }

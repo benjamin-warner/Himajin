@@ -1,4 +1,4 @@
-package nihonkaeritai.com.himajin.Fragments
+package io.nihonkaeritai.himajin.Fragments
 
 import android.app.Activity
 import android.content.Context
@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import nihonkaeritai.com.himajin.Helpers.GpsHelper
-import nihonkaeritai.com.himajin.Helpers.PermissionHelper
-import nihonkaeritai.com.himajin.R
+import io.nihonkaeritai.himajin.Helpers.GpsHelper
+import io.nihonkaeritai.himajin.Helpers.PermissionHelper
+import io.nihonkaeritai.himajin.R
 
 class DashboardFragment : Fragment() {
 
@@ -45,12 +45,22 @@ class DashboardFragment : Fragment() {
         if(context is Activity){
             PermissionHelper.RequestGpsPermission(context)
             gpsHelper = GpsHelper(context, 60000, 2000, { location ->
-                activity!!.runOnUiThread( {
-                    locationTextView.text = GpsHelper.GetCityName(context, location)
-                })
+                if(activity != null){
+                    activity!!.runOnUiThread( {
+                        locationTextView.text = GpsHelper.GetCityName(context, location)
+                    })
+                }
             })
-            gpsHelper.resumeGpsUpdates()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        gpsHelper.resumeGpsUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        gpsHelper.stopGpsUpdates()
+    }
 }

@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "nihonkaeritai.com.himajin"
+        applicationId "io.nihonkaeritai.himajin"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
@@ -38,3 +38,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'
