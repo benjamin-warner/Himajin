@@ -28,7 +28,7 @@ public class GpsHelper {
         mTimeOutDuration = timeOut;
     }
 
-    public void stopGpsUpdates(){
+    public void stopGpsUpdates() {
         mGpsHandler.removeCallbacks(mGpsRunnable);
     }
 

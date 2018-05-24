@@ -45,12 +45,22 @@ class DashboardFragment : Fragment() {
         if(context is Activity){
             PermissionHelper.RequestGpsPermission(context)
             gpsHelper = GpsHelper(context, 60000, 2000, { location ->
-                activity!!.runOnUiThread( {
-                    locationTextView.text = GpsHelper.GetCityName(context, location)
-                })
+                if(activity != null){
+                    activity!!.runOnUiThread( {
+                        locationTextView.text = GpsHelper.GetCityName(context, location)
+                    })
+                }
             })
-            gpsHelper.resumeGpsUpdates()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        gpsHelper.resumeGpsUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        gpsHelper.stopGpsUpdates()
+    }
 }
