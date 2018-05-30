@@ -83,7 +83,8 @@ class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
                 val isNewUser = arguments!!.getBoolean(NEW_USER)
                 if (isNewUser) {
                     auth.register(email, password, authHandler)
-                } else {
+                }
+                else {
                     auth.login(email, password, authHandler)
                 }
             }

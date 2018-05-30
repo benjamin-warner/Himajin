@@ -1,13 +1,20 @@
 package io.nihonkaeritai.himajin.Auth
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import io.nihonkaeritai.himajin.Exceptions.AuthException
 import io.nihonkaeritai.himajin.Interfaces.IAuth
 import io.nihonkaeritai.himajin.Interfaces.IHandlesAuth
 
 class FirebaseAuthMethod : IAuth{
+
+    override fun getEmail(): String? {
+        return FirebaseAuth.getInstance().currentUser!!.email
+    }
+
+    override fun getUserId(): String? {
+        return FirebaseAuth.getInstance().currentUser!!.uid
+    }
+
 
     override fun isLoggedIn() : Boolean{
         return FirebaseAuth.getInstance().currentUser != null
@@ -16,21 +23,17 @@ class FirebaseAuthMethod : IAuth{
     override fun login(email: String, password: String, handler: IHandlesAuth) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener({ result ->
-                    handleResult(result, handler)
+                    handler.handleAuthAttempt(result.isSuccessful, AuthException(result.exception?.message!!))
         })
     }
 
     override fun register(email: String, password: String, handler: IHandlesAuth) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener({ result ->
-                    handleResult(result, handler)
-        })
-    }
+                    if(result.isSuccessful){
+                        handler.handleRegisterAttempt(result.isSuccessful, null)
+                    }
 
-    private fun handleResult(p0: Task<AuthResult>, handler: IHandlesAuth) {
-        if(p0.isSuccessful)
-            handler.handleAuthAttempt(true, null)
-        else
-            handler.handleAuthAttempt(false, AuthException(p0.exception?.message!!))
+        })
     }
 }

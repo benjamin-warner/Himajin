@@ -6,8 +6,14 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
 import android.widget.Toast
 import io.nihonkaeritai.himajin.Adapters.AuthPagerAdapter
+import io.nihonkaeritai.himajin.Auth.FirebaseAuthMethod
+import io.nihonkaeritai.himajin.DBModels.FirebaseUserModel
 import io.nihonkaeritai.himajin.Exceptions.AuthException
+import io.nihonkaeritai.himajin.Interfaces.IAuth
 import io.nihonkaeritai.himajin.Interfaces.IHandlesAuth
+import io.nihonkaeritai.himajin.Interfaces.IUserDBModel
+import io.nihonkaeritai.himajin.Interfaces.IUserRepository
+import io.nihonkaeritai.himajin.Repositories.FirebaseUserRepository
 
 class AuthActivity : FragmentActivity(), IHandlesAuth {
 
@@ -18,6 +24,17 @@ class AuthActivity : FragmentActivity(), IHandlesAuth {
         val viewPager : ViewPager = findViewById(R.id.pager)
         val adapter = AuthPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
+    }
+
+    override fun handleRegisterAttempt(success: Boolean, exception: AuthException?) {
+        if(success){
+            val userRepository: IUserRepository = FirebaseUserRepository()
+            val auth: IAuth = FirebaseAuthMethod()
+            val newUser: IUserDBModel = FirebaseUserModel(auth.getUserId(), auth.getEmail())
+            userRepository.addNewUser(newUser)
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     override fun handleAuthAttempt(success: Boolean, exception: AuthException?) {
