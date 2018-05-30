@@ -11,7 +11,7 @@ import io.nihonkaeritai.himajin.DBModels.FirebaseUserModel
 import io.nihonkaeritai.himajin.Exceptions.AuthException
 import io.nihonkaeritai.himajin.Interfaces.IAuth
 import io.nihonkaeritai.himajin.Interfaces.IHandlesAuth
-import io.nihonkaeritai.himajin.Interfaces.IUserDBModel
+import io.nihonkaeritai.himajin.Interfaces.IUser
 import io.nihonkaeritai.himajin.Interfaces.IUserRepository
 import io.nihonkaeritai.himajin.Repositories.FirebaseUserRepository
 
@@ -30,7 +30,7 @@ class AuthActivity : FragmentActivity(), IHandlesAuth {
         if(success){
             val userRepository: IUserRepository = FirebaseUserRepository()
             val auth: IAuth = FirebaseAuthMethod()
-            val newUser: IUserDBModel = FirebaseUserModel(auth.getUserId(), auth.getEmail())
+            val newUser: IUser = FirebaseUserModel(auth.getUserId(), auth.getEmail())
             userRepository.addNewUser(newUser)
             startActivity(Intent(this, MainActivity::class.java))
             finish()

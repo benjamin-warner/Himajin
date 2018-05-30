@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
 import io.nihonkaeritai.himajin.Auth.FirebaseAuthMethod
 import io.nihonkaeritai.himajin.DBModels.FirebaseUserModel
-import io.nihonkaeritai.himajin.Interfaces.IUserDBModel
+import io.nihonkaeritai.himajin.Interfaces.IUser
 import io.nihonkaeritai.himajin.Interfaces.IUserRepository
 
 class FirebaseUserRepository : IUserRepository {
@@ -14,7 +14,7 @@ class FirebaseUserRepository : IUserRepository {
         private const val USER_DISPLAY_NAME = "displayName"
     }
 
-    override fun addNewUser(newUser: IUserDBModel) {
+    override fun addNewUser(newUser: IUser) {
         val userId = FirebaseAuthMethod().getUserId()
         val firebaseUserModel = newUser as FirebaseUserModel
         FirebaseDatabase.getInstance()

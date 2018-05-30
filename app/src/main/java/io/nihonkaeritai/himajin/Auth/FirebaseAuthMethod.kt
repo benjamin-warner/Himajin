@@ -8,31 +8,36 @@ import io.nihonkaeritai.himajin.Interfaces.IHandlesAuth
 class FirebaseAuthMethod : IAuth{
 
     override fun getEmail(): String? {
-        return FirebaseAuth.getInstance().currentUser!!.email
+        if(isLoggedIn()){
+            return FirebaseAuth.getInstance().currentUser!!.email
+        }
+        return null
     }
 
     override fun getUserId(): String? {
-        return FirebaseAuth.getInstance().currentUser!!.uid
+        if(isLoggedIn()) {
+            return FirebaseAuth.getInstance().currentUser!!.uid
+        }
+        return null
     }
-
 
     override fun isLoggedIn() : Boolean{
         return FirebaseAuth.getInstance().currentUser != null
     }
 
     override fun login(email: String, password: String, handler: IHandlesAuth) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+        FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener({ result ->
                     handler.handleAuthAttempt(result.isSuccessful, AuthException(result.exception?.message!!))
         })
     }
 
     override fun register(email: String, password: String, handler: IHandlesAuth) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+        FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener({ result ->
-                    if(result.isSuccessful){
-                        handler.handleRegisterAttempt(result.isSuccessful, null)
-                    }
+                    handler.handleRegisterAttempt(result.isSuccessful, null)
 
         })
     }

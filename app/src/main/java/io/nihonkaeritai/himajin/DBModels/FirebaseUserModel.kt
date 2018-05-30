@@ -1,11 +1,11 @@
 package io.nihonkaeritai.himajin.DBModels
 
 import com.google.firebase.database.IgnoreExtraProperties
-import io.nihonkaeritai.himajin.Interfaces.IUserDBModel
+import io.nihonkaeritai.himajin.Interfaces.IUser
 
 
 @IgnoreExtraProperties
-class FirebaseUserModel : IUserDBModel {
+class FirebaseUserModel : IUser {
     var displayName: String? = null
     var email: String? = null
 
