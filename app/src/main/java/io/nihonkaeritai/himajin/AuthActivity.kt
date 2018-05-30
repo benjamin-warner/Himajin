@@ -28,21 +28,34 @@ class AuthActivity : FragmentActivity(), IHandlesAuth {
 
     override fun handleRegisterAttempt(success: Boolean, exception: AuthException?) {
         if(success){
-            val userRepository: IUserRepository = FirebaseUserRepository()
-            val auth: IAuth = FirebaseAuthMethod()
-            val newUser: IUser = FirebaseUserModel(auth.getUserId(), auth.getEmail())
-            userRepository.addNewUser(newUser)
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            createUserAccount()
+            startMainActivity()
+        }
+        else{
+            displayError(exception)
         }
     }
 
     override fun handleAuthAttempt(success: Boolean, exception: AuthException?) {
-        if(success) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
+        if(success)
+            startMainActivity()
         else
-            Toast.makeText(this, exception?.message, Toast.LENGTH_SHORT).show()
+            displayError(exception)
+    }
+
+    private fun displayError(exception: AuthException?) {
+        Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun createUserAccount(){
+        val userRepository: IUserRepository = FirebaseUserRepository()
+        val auth: IAuth = FirebaseAuthMethod()
+        val newUser: IUser = FirebaseUserModel(auth.getUserId(), auth.getEmail())
+        userRepository.addNewUser(newUser)
+    }
+
+    private fun startMainActivity(){
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
