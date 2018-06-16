@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import io.nihonkaeritai.himajin.Auth.FirebaseAuthMethod
+import io.nihonkaeritai.himajin.Auth.Auth
 import io.nihonkaeritai.himajin.Interfaces.IAuth
-import io.nihonkaeritai.himajin.Interfaces.IHandlesAuth
+import io.nihonkaeritai.himajin.Interfaces.IHandlesAuthentication
 import io.nihonkaeritai.himajin.R
 
 class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager){
@@ -33,7 +33,7 @@ class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
     class AuthFragment : Fragment() {
         private lateinit var email: EditText
         private lateinit var password: EditText
-        private lateinit var authHandler: IHandlesAuth
+        private lateinit var authHandler: IHandlesAuthentication
 
         companion object {
             private const val NEW_USER: String = "NEW_USER"
@@ -67,11 +67,11 @@ class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
 
         override fun onAttach(context: Context?) {
             super.onAttach(context)
-            if (context is IHandlesAuth){
+            if (context is IHandlesAuthentication){
                 authHandler = context
             }
             else{
-                throw ClassCastException("Context must implement IHandlesAuth!")
+                throw ClassCastException("Context must implement IHandlesAuthentication!")
             }
         }
 
@@ -79,7 +79,7 @@ class AuthPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
             val email = email.text.toString()
             val password = password.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                val auth: IAuth = FirebaseAuthMethod()
+                val auth: IAuth = Auth()
                 val isNewUser = arguments!!.getBoolean(NEW_USER)
                 if (isNewUser) {
                     auth.register(email, password, authHandler)

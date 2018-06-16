@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import io.nihonkaeritai.himajin.Auth.FirebaseAuthMethod
+import io.nihonkaeritai.himajin.Auth.Auth
 import io.nihonkaeritai.himajin.Fragments.DashboardFragment
 import io.nihonkaeritai.himajin.Fragments.ProfileFragment
 import io.nihonkaeritai.himajin.Interfaces.IAuth
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkLogin() {
-        val auth : IAuth = FirebaseAuthMethod()
+        val auth : IAuth = Auth()
         if(!auth.isLoggedIn()) {
             startActivity(Intent(this, AuthActivity::class.java))
             finish()

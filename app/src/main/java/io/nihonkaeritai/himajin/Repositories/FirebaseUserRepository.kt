@@ -2,7 +2,7 @@ package io.nihonkaeritai.himajin.Repositories
 
 import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
-import io.nihonkaeritai.himajin.Auth.FirebaseAuthMethod
+import io.nihonkaeritai.himajin.Auth.Auth
 import io.nihonkaeritai.himajin.DBModels.FirebaseUserModel
 import io.nihonkaeritai.himajin.Interfaces.IUser
 import io.nihonkaeritai.himajin.Interfaces.IUserRepository
@@ -15,7 +15,7 @@ class FirebaseUserRepository : IUserRepository {
     }
 
     override fun addNewUser(newUser: IUser) {
-        val userId = FirebaseAuthMethod().getUserId()
+        val userId = Auth().getUserId()
         val firebaseUserModel = newUser as FirebaseUserModel
         FirebaseDatabase.getInstance()
                 .getReference(USERS_DIRECTORY)
@@ -28,7 +28,7 @@ class FirebaseUserRepository : IUserRepository {
     }
 
     override fun updateDisplayName(newName: String) {
-        val userId = FirebaseAuthMethod().getUserId()
+        val userId = Auth().getUserId()
         FirebaseDatabase.getInstance()
                 .getReference(USERS_DIRECTORY)
                 .child(userId)

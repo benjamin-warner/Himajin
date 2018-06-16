@@ -6,16 +6,17 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
 import android.widget.Toast
 import io.nihonkaeritai.himajin.Adapters.AuthPagerAdapter
-import io.nihonkaeritai.himajin.Auth.FirebaseAuthMethod
+import io.nihonkaeritai.himajin.Auth.Auth
 import io.nihonkaeritai.himajin.DBModels.FirebaseUserModel
 import io.nihonkaeritai.himajin.Exceptions.AuthException
 import io.nihonkaeritai.himajin.Interfaces.IAuth
-import io.nihonkaeritai.himajin.Interfaces.IHandlesAuth
+import io.nihonkaeritai.himajin.Interfaces.IHandlesAuthentication
 import io.nihonkaeritai.himajin.Interfaces.IUser
 import io.nihonkaeritai.himajin.Interfaces.IUserRepository
 import io.nihonkaeritai.himajin.Repositories.FirebaseUserRepository
 
-class AuthActivity : FragmentActivity(), IHandlesAuth {
+
+class AuthActivity : FragmentActivity(), IHandlesAuthentication {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,7 @@ class AuthActivity : FragmentActivity(), IHandlesAuth {
 
     private fun createUserAccount(){
         val userRepository: IUserRepository = FirebaseUserRepository()
-        val auth: IAuth = FirebaseAuthMethod()
+        val auth: IAuth = Auth()
         val newUser: IUser = FirebaseUserModel(auth.getUserId(), auth.getEmail())
         userRepository.addNewUser(newUser)
     }
